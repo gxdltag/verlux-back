@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Signal</title>
+</head>
+<body>
+  <h1>Add New Signal</h1>
+  <form id="signalForm">
+    <label>Pair Name: <input type="text" name="Pair Name" required></label><br>
+    <label>Signal Type: <input type="text" name="Signal Type" required></label><br>
+    <label>Time To: <input type="text" name="Time To" required></label><br>
+    <label>Gale: <input type="text" name="Gale" required></label><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('signalForm');
+    const apiUrl = 'https://sheetdb.io/api/v1/d4nn51sjxdwky'; // Replace with your SheetDB API endpoint
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => (data[key] = value));
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          if (response.ok) {
+            alert('Signal added successfully!');
+            form.reset();
+          } else {
+            alert('Error adding signal!');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>
