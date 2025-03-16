@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <title>Generated Paper</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Generated Question Paper</h1>
+        {% for section, questions in paper.items() %}
+            <h2>{{ section|capitalize }}</h2>
+            <ol>
+                {% for q in questions %}
+                    <li>{{ q.question }} [{{ q.marks }} Marks]</li>
+                {% endfor %}
+            </ol>
+        {% endfor %}
+        <a href="/">Generate Another</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question Paper Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        label, input, select, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        input[type="number"],
+        button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .checkbox-group label:hover {
+            background-color: #f0f0f0;
+        }
+        .generated-paper {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Question Paper Generator</h1>
+
+<form method="post">
+    <h3>Select Chapters:</h3>
+    <div class="checkbox-group">
+        {% for chapter in chapters %}
+            <label>
+                <input type="checkbox" name="chapters" value="{{ chapter }}"> {{ chapter }}
+            </label>
+        {% endfor %}
+    </div>
+    
+    <label for="section_a">Number of Questions in Section A:</label>
+    <input type="number" name="section_a" min="0">
+    
+    <label for="section_b">Number of Questions in Section B:</label>
+    <input type="number" name="section_b" min="0">
+    
+    <label for="section_c">Number of Questions in Section C:</label>
+    <input type="number" name="section_c" min="0">
+    
+    <label for="section_d">Number of Questions in Section D:</label>
+    <input type="number" name="section_d" min="0">
+    
+    <button type="submit">Generate Question Paper</button>
+</form>
+
+{% if paper %}
+    <div class="generated-paper">
+        <h2>Generated Question Paper</h2>
+        {% for section, questions in paper.items() %}
+            <h3>{{ section.replace('_', ' ').title() }}</h3>
+            <ol>
+                {% for q in questions %}
+                    <li>{{ q.question }} <strong>[{{ q.marks }} Marks]</strong></li>
+                {% endfor %}
+            </ol>
+            <hr>
+        {% endfor %}
+    </div>
+{% endif %}
+
+</body>
+</html>
